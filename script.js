@@ -1315,3 +1315,33 @@ function startPanMode(e) {
     document.addEventListener('mousemove', pan);
     document.addEventListener('mouseup', stopPan);
 }
+
+// ==================== BRIDGE GUIDE SECTION ====================
+
+// Inicialização do Guia de Pontes
+document.querySelectorAll('.guide-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+        const guideId = this.getAttribute('data-guide');
+        
+        // Remove active de todas as tabs
+        document.querySelectorAll('.guide-tab').forEach(t => {
+            t.classList.remove('active');
+        });
+        
+        // Adiciona active na tab clicada
+        this.classList.add('active');
+        
+        // Esconde todos os panes
+        document.querySelectorAll('.guide-pane').forEach(pane => {
+            pane.classList.remove('active');
+        });
+        
+        // Mostra o pane selecionado
+        document.getElementById(`guide-${guideId}`).classList.add('active');
+        
+        // Renderizar MathJax se necessário
+        if (window.MathJax && guideId === 'physics') {
+            MathJax.typeset();
+        }
+    });
+});
