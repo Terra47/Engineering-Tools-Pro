@@ -733,3 +733,212 @@ footer {
         margin: 0 5px;
     }
 }
+
+/* ==================== BRIDGE WIKI ==================== */
+.guide-menu {
+    background: #34495e;
+    border-radius: 15px;
+    padding: 15px;
+}
+
+.guide-tab {
+    background: #2c3e50;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.guide-tab:hover {
+    background: #3498db;
+    transform: translateY(-2px);
+}
+
+.guide-tab.active {
+    background: #3498db;
+    box-shadow: 0 0 0 2px #ecf0f1;
+}
+
+.guide-pane {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.guide-pane.active {
+    display: block;
+}
+
+.guide-content-container {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+/* Cards da Wiki */
+.wiki-card {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    border-left: 5px solid #3498db;
+    transition: transform 0.2s;
+}
+
+.wiki-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.wiki-icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.wiki-card h4 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.wiki-card h5 {
+    color: #3498db;
+    margin: 15px 0 5px 0;
+    font-weight: 500;
+}
+
+.wiki-card ul, .wiki-card ol {
+    padding-left: 20px;
+}
+
+.wiki-card li {
+    margin-bottom: 5px;
+}
+
+.wiki-card a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.wiki-card a:hover {
+    text-decoration: underline;
+}
+
+/* Forças (versão simples) */
+.force-simple {
+    background: white;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-left: 3px solid #3498db;
+}
+
+.force-simple h5 {
+    margin: 0 0 5px 0;
+    color: #2c3e50;
+}
+
+.force-simple p {
+    margin: 0;
+    color: #7f8c8d;
+}
+
+/* Material */
+.material-item {
+    background: white;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 10px;
+}
+
+.material-item h5 {
+    margin: 0 0 5px 0;
+    color: #2c3e50;
+}
+
+/* Curiosidades */
+.curiosity-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    position: relative;
+    overflow: hidden;
+    min-height: 200px;
+}
+
+.curiosity-number {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 4rem;
+    font-weight: bold;
+    opacity: 0.2;
+    color: white;
+}
+
+.curiosity-card h4 {
+    color: white;
+    margin-bottom: 15px;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.curiosity-card p {
+    color: rgba(255,255,255,0.9);
+    font-size: 0.95rem;
+}
+
+.curiosity-card a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    background: rgba(255,255,255,0.2);
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.curiosity-card a:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+/* Listas de vídeos */
+.video-list {
+    list-style: none;
+    padding: 0;
+}
+
+.video-list li {
+    margin-bottom: 10px;
+}
+
+.video-list a {
+    display: block;
+    padding: 10px;
+    background: white;
+    border-radius: 8px;
+    color: #2c3e50;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.video-list a:hover {
+    background: #3498db;
+    color: white;
+    transform: translateX(5px);
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .curiosity-card {
+        min-height: auto;
+    }
+}
