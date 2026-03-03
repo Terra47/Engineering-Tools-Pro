@@ -17,7 +17,7 @@
     <!-- Header -->
     <header class="text-center py-4">
         <h1 class="display-4">Engineering Tools Pro</h1>
-        <p class="lead">Calculadora Científica | Biblioteca de Fórmulas | Catálogo de Pontes | Guia de Pontes | Paint</p>
+        <p class="lead">Calculadora Científica | Biblioteca de Fórmulas | Catálogo de Pontes | Guia de Pontes | Paint | Teste de Cargas</p>
     </header>
 
     <!-- Navigation Menu -->
@@ -39,6 +39,9 @@
         </button>
         <button class="btn btn-outline-primary nav-btn" onclick="window.switchSection('drawing')">
             <i class="fas fa-paint-brush me-2"></i>Paint
+        </button>
+        <button class="btn btn-outline-primary nav-btn" onclick="window.switchSection('load-test')">
+            <i class="fas fa-weight-hanging me-2"></i>Teste de Cargas
         </button>
     </nav>
 
@@ -425,16 +428,155 @@
                         <ul>
                             <li><a href="https://www.youtube.com/c/ManualdoMundo" target="_blank">🔹 Manual do Mundo</a> - Experimentos legais</li>
                             <li><a href="https://www.youtube.com/c/EngenhariaDetalhada" target="_blank">🔹 Engenharia Detalhada</a> - Explicações simples</li>
-                            <li><a href="https://www.youtube.com/ocanaldaengenharia" target="_blank">🔹 O Canal da Engenharia</a> - Curiosidades</li>
+                            <li><a href="https://www.youtube.com/c/PrimoEngenheiro" target="_blank">🔹 Primo Engenheiro</a> - Curiosidades</li>
                         </ul>
                     </div>
                     <div class="col-md-6">
                         <h5>Instagram:</h5>
                         <ul>
-                            <li><a href="https://www.instagram.com/blogdaengenharia/" target="_blank">🔹 @blogdaengenharia</a></li>
-                            <li><a href="https://www.instagram.com/engenharia360/" target="_blank">🔹 @engenharia360</a></li>
+                            <li><a href="https://www.instagram.com/engenharia" target="_blank">🔹 @engenharia</a></li>
+                            <li><a href="https://www.instagram.com/curiosidadeseng" target="_blank">🔹 @curiosidadeseng</a></li>
                         </ul>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Desafio de Cargas Section -->
+<section id="load-test-section" class="content-section">
+    <h2 class="text-center mb-4"> Desafio de Cargas - Ranking de Grupos</h2>
+    
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="load-test-container">
+                
+                <!-- Nome do Grupo -->
+                <div class="load-card">
+                    <h4><i class="fas fa-users me-2"></i>1. Identificação do Grupo</h4>
+                    <input type="text" id="group-name" class="form-control form-control-lg" 
+                           placeholder="Digite o nome do grupo (ex: Grupo 1, Os Engenheiros, etc.)">
+                </div>
+
+                <!-- Adicionar Cargas -->
+                <div class="load-card">
+                    <h4><i class="fas fa-weight-hanging me-2"></i>2. Adicione Cargas (limite: 10 toneladas)</h4>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="load-type-group">
+                                <h5>Pesos Fixos</h5>
+                                
+                                <div class="preset-load" data-weight="1">
+                                    <span>1kg</span>
+                                    <button class="btn-add-preset">+ Adicionar</button>
+                                </div>
+                                
+                                <div class="preset-load" data-weight="5">
+                                    <span>5kg</span>
+                                    <button class="btn-add-preset">+ Adicionar</button>
+                                </div>
+                                
+                                <div class="preset-load" data-weight="10">
+                                    <span>10kg</span>
+                                    <button class="btn-add-preset">+ Adicionar</button>
+                                </div>
+                                
+                                <div class="preset-load" data-weight="20">
+                                    <span>20kg</span>
+                                    <button class="btn-add-preset">+ Adicionar</button>
+                                </div>
+                                
+                                <div class="preset-load" data-weight="50">
+                                    <span>50kg</span>
+                                    <button class="btn-add-preset">+ Adicionar</button>
+                                </div>
+                                
+                                <div class="preset-load" data-weight="100">
+                                    <span>100kg</span>
+                                    <button class="btn-add-preset">+ Adicionar</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="load-type-group">
+                                <h5>Pesos Especiais (Livros)</h5>
+                                
+                                <div class="preset-load" data-weight="random-linguagens">
+                                    <span>Livro Linguagens/Humanas</span>
+                                    <span class="weight-range">(900g - 1kg)</span>
+                                    <button class="btn-add-special" data-type="linguagens">+ Adicionar</button>
+                                </div>
+                                
+                                <div class="preset-load" data-weight="random-matematica">
+                                    <span>Livro Matemática/Natureza</span>
+                                    <span class="weight-range">(700g - 800g)</span>
+                                    <button class="btn-add-special" data-type="matematica">+ Adicionar</button>
+                                </div>
+                            </div>
+                            
+                            <div class="load-type-group mt-3">
+                                <h5>Peso Personalizado</h5>
+                                <div class="custom-load">
+                                    <input type="number" id="custom-weight" min="0.1" max="5000" step="0.1" 
+                                           placeholder="Digite o peso (kg)">
+                                    <button id="btn-add-custom">Adicionar</button>
+                                </div>
+                                <small class="text-muted">Máximo 5000kg (5 toneladas por adição)</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cargas Adicionadas -->
+                <div class="load-card">
+                    <h4><i class="fas fa-list me-2"></i>3. Cargas do Grupo</h4>
+                    
+                    <div id="load-list" class="load-list">
+                        <p class="text-muted text-center">Nenhuma carga adicionada ainda</p>
+                    </div>
+                    
+                    <div class="load-summary">
+                        <div class="total-weight">
+                            <strong>Peso Total:</strong> 
+                            <span id="total-weight">0</span> kg / 10.000 kg
+                            <div class="weight-bar">
+                                <div id="weight-bar-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="load-actions">
+                            <button id="btn-clear-all" class="btn btn-warning">Limpar Tudo</button>
+                            <button id="btn-submit-test" class="btn btn-success">Finalizar Teste</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mensagem de Estrutura -->
+                <div id="structural-message" class="load-card warning-card" style="display: none;">
+                    <h4><i class="fas fa-exclamation-triangle me-2"></i>A ESTRUTURA CEDEU!</h4>
+                    <p>A ponte não aguentou o peso total de <span id="failure-weight">0</span>kg.</p>
+                    <p>Máximo suportado foi <span id="max-supported">0</span>kg.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ranking -->
+    <div class="row justify-content-center mt-4">
+        <div class="col-lg-10">
+            <div class="ranking-container">
+                <h3 class="text-center mb-4"><i class="fas fa-trophy me-2"></i>Ranking de Resistência</h3>
+                
+                <div id="ranking-list" class="ranking-list">
+                    <!-- Ranking aparece aqui -->
+                </div>
+                
+                <div class="text-center mt-3">
+                    <button id="btn-reset-ranking" class="btn btn-outline-danger">
+                        <i class="fas fa-trash me-2"></i>Resetar Ranking
+                    </button>
                 </div>
             </div>
         </div>
@@ -1271,4 +1413,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
