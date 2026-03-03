@@ -1345,3 +1345,306 @@ document.querySelectorAll('.guide-tab').forEach(tab => {
         }
     });
 });
+
+// ==================== LOAD TEST - RANKING ====================
+
+// Estado do teste
+let currentLoads = [];
+let totalWeight = 0;
+const MAX_TOTAL_WEIGHT = 10000; // 10 toneladas
+
+// Ranking salvo no localStorage
+let ranking = [];
+
+// Carregar ranking ao iniciar
+loadRanking();
+
+// Event listeners
+document.querySelectorAll('.btn-add-preset').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const weight = parseFloat(this.parentElement.getAttribute('data-weight'));
+        addLoad(weight, 'Peso fixo', weight + 'kg');
+    });
+});
+
+document.querySelectorAll('.btn-add-special').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const type = this.getAttribute('data-type');
+        let weight, displayName;
+        
+        if (type === 'linguagens') {
+            weight = (Math.random() * 0.1 + 0.9); // 0.9 a 1.0 kg
+            displayName = 'Livro Linguagens/Humanas';
+        } else {
+            weight = (Math.random() * 0.1 + 0.7); // 0.7 a 0.8 kg
+            displayName = 'Livro Matemática/Natureza';
+        }
+        
+        // Arredondar para 2 casas decimais
+        weight = Math.round(weight * 100) / 100;
+        addLoad(weight, displayName, displayName);
+    });
+});
+
+document.getElementById('btn-add-custom')?.addEventListener('click', function() {
+    const input = document.getElementById('custom-weight');
+    const weight = parseFloat(input.value);
+    
+    if (isNaN(weight) || weight <= 0) {
+        alert('Digite um peso válido!');
+        return;
+    }
+    
+    if (weight > 5000) {
+        alert('Peso máximo por adição é 5000kg (5 toneladas)');
+        return;
+    }
+    
+    addLoad(weight, 'Personalizado', weight + 'kg');
+    input.value = '';
+});
+
+document.getElementById('btn-clear-all')?.addEventListener('click', function() {
+    if (confirm('Limpar todas as cargas?')) {
+        currentLoads = [];
+        updateLoadList();
+        document.getElementById('structural-message').style.display = 'none';
+    }
+});
+
+document.getElementById('btn-submit-test')?.addEventListener('click', function() {
+    submitTest();
+});
+
+document.getElementById('btn-reset-ranking')?.addEventListener('click', function() {
+    if (confirm('Tem certeza? Todo o ranking será apagado!')) {
+        ranking = [];
+        saveRanking();
+        displayRanking();
+    }
+});
+
+function addLoad(weight, category, displayName) {
+    const newTotal = totalWeight + weight;
+    
+    // Verificar se ultrapassa o limite
+    if (newTotal > MAX_TOTAL_WEIGHT) {
+        // A estrutura cedeu!
+        const maxSupported = totalWeight;
+        document.getElementById('failure-weight').textContent = newTotal.toFixed(2);
+        document.getElementById('max-supported').textContent = maxSupported.toFixed(2);
+        document.getElementById('structural-message').style.display = 'block';
+        
+        // Registrar no ranking (sem alert)
+        const groupName = document.getElementById('group-name').value.trim();
+        if (groupName !== '') {
+            ranking.push({
+                group: groupName,
+                weight: maxSupported,
+                date: new Date().toLocaleString(),
+                id: Date.now()
+            });
+            
+            // Ordenar ranking (maior peso primeiro)
+            ranking.sort((a, b) => b.weight - a.weight);
+            
+            // Manter apenas top 20
+            if (ranking.length > 20) {
+                ranking = ranking.slice(0, 20);
+            }
+            
+            saveRanking();
+            displayRanking();
+        }
+        
+        // Limpar para nova tentativa
+        currentLoads = [];
+        updateLoadList();
+        document.getElementById('group-name').value = '';
+        
+        return;
+    }
+    
+    // Adicionar carga (verificar se já existe igual para agrupar)
+    const existingIndex = currentLoads.findIndex(load => 
+        load.category === category && load.displayName === displayName
+    );
+    
+    if (existingIndex >= 0) {
+        // Já existe, incrementar quantidade
+        currentLoads[existingIndex].quantity++;
+        currentLoads[existingIndex].weight += weight;
+    } else {
+        // Novo item
+        currentLoads.push({
+            category: category,
+            displayName: displayName,
+            weight: weight,
+            quantity: 1,
+            id: Date.now() + Math.random()
+        });
+    }
+    
+    updateLoadList();
+}
+
+function updateLoadList() {
+    const listElement = document.getElementById('load-list');
+    const totalElement = document.getElementById('total-weight');
+    const barFill = document.getElementById('weight-bar-fill');
+    
+    // Calcular total
+    totalWeight = currentLoads.reduce((sum, load) => sum + load.weight, 0);
+    totalElement.textContent = totalWeight.toFixed(2);
+    
+    // Atualizar barra
+    const percentage = (totalWeight / MAX_TOTAL_WEIGHT) * 100;
+    barFill.style.width = percentage + '%';
+    
+    // Mudar cor da barra baseado na porcentagem
+    if (percentage < 50) {
+        barFill.style.background = 'linear-gradient(90deg, #27ae60, #2ecc71)';
+    } else if (percentage < 80) {
+        barFill.style.background = 'linear-gradient(90deg, #f39c12, #f1c40f)';
+    } else {
+        barFill.style.background = 'linear-gradient(90deg, #e74c3c, #c0392b)';
+    }
+    
+    // Renderizar lista agrupada
+    if (currentLoads.length === 0) {
+        listElement.innerHTML = '<div class="text-muted text-center p-3">Nenhuma carga adicionada</div>';
+        return;
+    }
+    
+    let html = '';
+    currentLoads.forEach(load => {
+        let displayText = '';
+        
+        if (load.category === 'Peso fixo') {
+            displayText = `${load.quantity}x ${load.displayName}`;
+        } else if (load.category === 'Personalizado') {
+            displayText = `${load.displayName}`;
+        } else {
+            displayText = `${load.quantity}x ${load.displayName}`;
+        }
+        
+        html += `
+            <div class="load-item">
+                <span><strong>${displayText}</strong> (total: ${load.weight.toFixed(2)}kg)</span>
+                <button class="remove-load" data-id="${load.id}">×</button>
+            </div>
+        `;
+    });
+    
+    listElement.innerHTML = html;
+    
+    // Event listeners para remover
+    document.querySelectorAll('.remove-load').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const id = parseFloat(this.getAttribute('data-id'));
+            currentLoads = currentLoads.filter(load => load.id !== id);
+            updateLoadList();
+            document.getElementById('structural-message').style.display = 'none';
+        });
+    });
+}
+
+function submitTest() {
+    if (currentLoads.length === 0) {
+        alert('Adicione algumas cargas primeiro!');
+        return;
+    }
+    
+    const groupName = document.getElementById('group-name').value.trim();
+    
+    if (groupName === '') {
+        alert('Digite o nome do grupo!');
+        return;
+    }
+    
+    // Registrar no ranking (SEM ALERT)
+    ranking.push({
+        group: groupName,
+        weight: totalWeight,
+        date: new Date().toLocaleString(),
+        id: Date.now()
+    });
+    
+    // Ordenar (maior peso primeiro)
+    ranking.sort((a, b) => b.weight - a.weight);
+    
+    // Manter apenas top 20
+    if (ranking.length > 20) {
+        ranking = ranking.slice(0, 20);
+    }
+    
+    saveRanking();
+    displayRanking();
+    
+    // Limpar formulário
+    currentLoads = [];
+    updateLoadList();
+    document.getElementById('group-name').value = '';
+    document.getElementById('structural-message').style.display = 'none';
+    
+    // SEM ALERT
+}
+
+function displayRanking() {
+    const rankingList = document.getElementById('ranking-list');
+    
+    if (ranking.length === 0) {
+        rankingList.innerHTML = '<div class="text-center p-4" style="color: #95a5a6;">Nenhum teste registrado ainda</div>';
+        return;
+    }
+    
+    let html = '';
+    ranking.forEach((entry, index) => {
+        let positionClass = '';
+        let medal = '';
+        
+        if (index === 0) {
+            positionClass = 'first';
+            medal = '🥇';
+        } else if (index === 1) {
+            positionClass = 'second';
+            medal = '🥈';
+        } else if (index === 2) {
+            positionClass = 'third';
+            medal = '🥉';
+        } else {
+            medal = `${index + 1}º`;
+        }
+        
+        html += `
+            <div class="ranking-item ${positionClass}">
+                <div class="ranking-position">${medal}</div>
+                <div class="ranking-info">
+                    <div class="ranking-group">${entry.group}</div>
+                    <div class="ranking-weight">${entry.weight.toFixed(2)} kg</div>
+                    <div class="ranking-date">${entry.date}</div>
+                </div>
+            </div>
+        `;
+    });
+    
+    rankingList.innerHTML = html;
+}
+
+// LocalStorage functions
+function saveRanking() {
+    localStorage.setItem('loadRanking', JSON.stringify(ranking));
+}
+
+function loadRanking() {
+    const saved = localStorage.getItem('loadRanking');
+    if (saved) {
+        try {
+            ranking = JSON.parse(saved);
+            displayRanking();
+        } catch (e) {
+            console.error('Erro ao carregar ranking');
+            ranking = [];
+        }
+    }
+}
