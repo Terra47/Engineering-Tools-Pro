@@ -17,7 +17,7 @@
     <!-- Header -->
     <header class="text-center py-4">
         <h1 class="display-4">Engineering Tools Pro</h1>
-        <p class="lead">Calculadora Científica | Biblioteca de Fórmulas | Catálogo de Pontes | Paint</p>
+        <p class="lead">Calculadora Científica | Biblioteca de Fórmulas | Catálogo de Pontes | Guia de Pontes | Paint</p>
     </header>
 
     <!-- Navigation Menu -->
@@ -33,6 +33,9 @@
         </button>
         <button class="btn btn-outline-primary nav-btn" onclick="window.switchSection('bridges')">
             <i class="fas fa-archway me-2"></i>Pontes
+        </button>
+        <button class="btn btn-outline-primary nav-btn" onclick="window.switchSection('bridge-guide')">
+            <i class="fas fa-graduation-cap me-2"></i>Guia de Pontes
         </button>
         <button class="btn btn-outline-primary nav-btn" onclick="window.switchSection('drawing')">
             <i class="fas fa-paint-brush me-2"></i>Paint
@@ -153,6 +156,285 @@
                         <i class="fas fa-undo"></i> Ctrl+Z: Desfazer | 
                         <i class="fas fa-save"></i> Salve seus desenhos
                     </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Bridge Wiki Section -->
+<section id="bridge-guide-section" class="content-section">
+    <h2 class="text-center mb-4">Wiki das Pontes</h2>
+    
+    <!-- Menu Interno da Wiki -->
+    <div class="guide-menu mb-4">
+        <div class="row g-2">
+            <div class="col-md-4">
+                <button class="btn guide-tab active w-100" data-guide="types">
+                    <i class="fas fa-archway me-2"></i>Tipos de Pontes
+                </button>
+            </div>
+            <div class="col-md-4">
+                <button class="btn guide-tab w-100" data-guide="howitworks">
+                    <i class="fas fa-cogs me-2"></i>Como Funcionam
+                </button>
+            </div>
+            <div class="col-md-4">
+                <button class="btn guide-tab w-100" data-guide="curiosities">
+                    <i class="fas fa-star me-2"></i>Curiosidades
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Conteúdo da Wiki -->
+    <div class="guide-content-container">
+        
+        <!-- TIPOS DE PONTES -->
+        <div id="guide-types" class="guide-pane active">
+            <h3 class="mb-4">Conheça os Principais Tipos de Pontes</h3>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="wiki-card">
+                        <div class="wiki-icon"></div>
+                        <h4>Pontes de Vigas</h4>
+                        <p>São as mais simples e comuns. Funcionam como uma régua apoiada em dois pilares. O peso empurra o meio da viga para baixo, enquanto os pilares seguram as pontas.</p>
+                        <p><strong>Onde ver:</strong> Viadutos urbanos, passarelas simples.</p>
+                        <p><strong>Exemplo famoso:</strong> <a href="https://pt.wikipedia.org/wiki/Ponte_Rio-Niterói" target="_blank">Ponte Rio-Niterói (parte em viga)</a></p>
+                    </div>
+
+                    <div class="wiki-card">
+                        <div class="wiki-icon"></div>
+                        <h4>Pontes Treliçadas</h4>
+                        <p>Feitas de triângulos conectados. O triângulo é a única forma geométrica que não deforma sob pressão! Por isso, as treliças são tão resistentes.</p>
+                        <p><strong>Tipos famosos:</strong></p>
+                        <ul>
+                            <li><strong>Warren:</strong> Triângulos alternados (parece uma sequência de V's)</li>
+                            <li><strong>Pratt:</strong> Diagonais apontando para o centro</li>
+                            <li><strong>Howe:</strong> Diagonais apontando para as pontas</li>
+                            <li><strong>K:</strong> Parece a letra K dentro dos triângulos</li>
+                        </ul>
+                        <p><strong>Onde ver:</strong> Pontes ferroviárias antigas, galpões industriais.</p>
+                        <p><a href="https://www.youtube.com/watch?v=Zc3TVaNZzjA" target="_blank">Vídeo: Como funcionam as treliças</a></p>
+                    </div>
+
+                    <div class="wiki-card">
+                        <div class="wiki-icon"></div>
+                        <h4>Pontes em Arco</h4>
+                        <p>Uma das mais antigas! O peso é empurrado para fora, descendo pelas laterais do arco até o chão. Funciona como um abraço gigante.</p>
+                        <p><strong>Materiais:</strong> Pedra (romanas), concreto, aço.</p>
+                        <p><strong>Exemplos famosos:</strong></p>
+                        <ul>
+                            <li><a href="https://pt.wikipedia.org/wiki/Ponte_Vecchio" target="_blank">Ponte Vecchio (Itália)</a> - Século XIV, tem lojas em cima!</li>
+                            <li><a href="https://pt.wikipedia.org/wiki/Arco_do_Triunfo" target="_blank">Arco do Triunfo (não é ponte, mas mostra o princípio)</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="wiki-card">
+                        <div class="wiki-icon"></div>
+                        <h4>Pontes Suspensas</h4>
+                        <p>Duas torres enormes, cabos grossos ligando o topo delas e cabos mais finos descendo para segurar a estrada. Parece um varal gigante!</p>
+                        <p><strong>Como funciona:</strong> Os cabos principais ficam esticados entre as torres, e os pendurais (cabos verticais) seguram a pista.</p>
+                        <p><strong>Exemplos famosos:</strong></p>
+                        <ul>
+                            <li><a href="https://pt.wikipedia.org/wiki/Ponte_Golden_Gate" target="_blank">Golden Gate (EUA)</a> - Aquela laranja famosa</li>
+                            <li><a href="https://pt.wikipedia.org/wiki/Ponte_de_Brooklyn" target="_blank">Ponte do Brooklyn (NY)</a> - Mistura suspensa com estaiada</li>
+                        </ul>
+                    </div>
+
+                    <div class="wiki-card">
+                        <div class="wiki-icon"></div>
+                        <h4>Pontes Estaiadas</h4>
+                        <p>Parecem um leque ou uma harpa gigante. Os cabos vão direto da torre para a pista, formando triângulos alongados.</p>
+                        <p><strong>Diferença da suspensa:</strong> Na estaiada, os cabos são retos e conectados diretamente; na suspensa, os cabos principais ficam soltos entre as torres.</p>
+                        <p><strong>Exemplos famosos:</strong></p>
+                        <ul>
+                            <li><a href="https://pt.wikipedia.org/wiki/Ponte_Estaiada_Octávio_Frias_de_Oliveira" target="_blank">Ponte Estaiada de São Paulo</a> - Cartão postal da zona sul</li>
+                            <li><a href="https://pt.wikipedia.org/wiki/Ponte_Vasco_da_Gama" target="_blank">Ponte Vasco da Gama (Portugal)</a> - Uma das maiores da Europa</li>
+                        </ul>
+                    </div>
+
+                    <div class="wiki-card">
+                        <div class="wiki-icon"></div>
+                        <h4>Pontes Móveis</h4>
+                        <p>Algumas pontes precisam se mexer para deixar navios passarem! Os tipos mais comuns:</p>
+                        <ul>
+                            <li><strong>Levadiça (basculante):</strong> Levanta igual portão</li>
+                            <li><strong>Giratória:</strong> Gira de lado</li>
+                            <li><strong>Elevatória:</strong> Um pedaço sobe igual elevador</li>
+                        </ul>
+                        <p><strong>Exemplo:</strong> <a href="https://pt.wikipedia.org/wiki/Ponte_levadi%C3%A7a" target="_blank">Ponte levadiça de castelo medieval</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COMO FUNCIONAM -->
+        <div id="guide-howitworks" class="guide-pane">
+            <h3 class="mb-4">Como as Pontes Funcionam?</h3>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="wiki-card">
+                        <h4>Forças em Ação (Simplificado)</h4>
+                        
+                        <div class="force-simple">
+                            <h5>Compressão</h5>
+                            <p>Aperta, encurta o material. É o que acontece nos pilares e nas pedras do arco.</p>
+                            <p><em>Exemplo:</em> Amassar uma latinha.</p>
+                        </div>
+                        
+                        <div class="force-simple">
+                            <h5>Tração</h5>
+                            <p>Estica, puxa. Acontece nos cabos e nas correntes.</p>
+                            <p><em>Exemplo:</em> Puxar um elástico.</p>
+                        </div>
+                        
+                        <div class="force-simple">
+                            <h5>Cisalhamento</h5>
+                            <p>Corta, desliza. É o que tentaria fazer uma faca no pilar.</p>
+                            <p><em>Exemplo:</em> Tesoura cortando papel.</p>
+                        </div>
+                        
+                        <div class="force-simple">
+                            <h5>Flexão</h5>
+                            <p>Entorta, dobra. Acontece no meio das vigas.</p>
+                            <p><em>Exemplo:</em> Régua apoiada nas pontas com peso no meio.</p>
+                        </div>
+                    </div>
+
+                    <div class="wiki-card mt-3">
+                        <h4>Vídeos Explicativos</h4>
+                        <ul class="video-list">
+                            <li><a href="https://www.youtube.com/watch?v=so28j0lEKrE" target="_blank">🔹 Quais são os tipos de pontes?</a></li>
+                            <li><a href="https://www.youtube.com/watch?v=fYtaunbpRjU" target="_blank">🔹 A física das pontes suspensas</a></li>
+                            <li><a href="https://www.youtube.com/watch?v=-TTP4iDL34A" target="_blank">🔹 Por que pontes não caem?</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="wiki-card">
+                        <h4>Materiais Mais Usados</h4>
+                        
+                        <div class="material-item">
+                            <h5>Pedra</h5>
+                            <p>Usada pelos romanos. Aguenta muito peso (compressão), mas não pode ser esticada.</p>
+                            <p><strong>Exemplo:</strong> Aquedutos romanos (alguns funcionam até hoje!)</p>
+                        </div>
+                        
+                        <div class="material-item">
+                            <h5>Concreto</h5>
+                            <p>Moderno, barato, moldável. Leva ferro dentro (concreto armado) para aguentar também a tração.</p>
+                        </div>
+                        
+                        <div class="material-item">
+                            <h5>Aço</h5>
+                            <p>Resiste a tudo (tração, compressão). Usado em cabos, vigas, treliças.</p>
+                        </div>
+                        
+                        <div class="material-item">
+                            <h5>Madeira</h5>
+                            <p>Usada em pontes pequenas, cobertas, históricas. Mais frágil, mas bonita.</p>
+                        </div>
+                    </div>
+
+                    <div class="wiki-card mt-3">
+                        <h4>Por Que Elas Não Caem?</h4>
+                        <p>Porque os engenheiros calculam tudo antes:</p>
+                        <ol>
+                            <li><strong>Peso próprio:</strong> A ponte aguenta ela mesma</li>
+                            <li><strong>Carga dos carros:</strong> Calculam o pior cenário (todos os caminhões cheios no mesmo lugar)</li>
+                            <li><strong>Vento:</strong> Pontes balançam de propósito! O projeto permite um pouco de movimento</li>
+                            <li><strong>Terremotos:</strong> Em lugares com tremor, as pontes são flexíveis</li>
+                        </ol>
+                        <p class="mt-2"><a href="https://www.youtube.com/watch?v=zqpzIDedSiY" target="_blank">Por que a ponte Tacoma caiu?</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CURIOSIDADES -->
+        <div id="guide-curiosities" class="guide-pane">
+            <h3 class="mb-4">Curiosidades Sobre Pontes</h3>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="curiosity-card">
+                        <div class="curiosity-number">1</div>
+                        <h4>A MAIS LONGA DO MUNDO</h4>
+                        <p><strong>Ponte Danyang-Kunshan (China)</strong> - 164km! É tão longa que liga duas cidades. É uma ponte ferroviária sobre água e terra.</p>
+                        <p><a href="https://en.wikipedia.org/wiki/Danyang%E2%80%93Kunshan_Grand_Bridge" target="_blank">🔗 Ler mais</a></p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="curiosity-card">
+                        <div class="curiosity-number">2</div>
+                        <h4>A MAIS ALTA</h4>
+                        <p><strong>Ponte do Cânion Huajiang (China)</strong> - 625m de altura! É tão alta que a Torre Eiffel (330m) caberia embaixo dela. Inaugurada em 2025, tem café com vista para as nuvens e até bungee jumping.</p>
+                        <p><a href="https://en.wikipedia.org/wiki/Huajiang_Canyon_Bridge" target="_blank">🔗 Ler mais</a></p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="curiosity-card">
+                        <div class="curiosity-number">3</div>
+                        <h4>PONTE ASSOMBRADA</h4>
+                        <p><strong>Ponte de Overtoun (Escócia)</strong> - Conhecida como "Ponte dos Cães Suicidas". Vários cães pularam sem explicação. Dizem ser cheiro de ratão-do-banhado...</p>
+                        <p><a href="https://en.wikipedia.org/wiki/Overtoun_Bridge" target="_blank">🔗 Ler mais (inglês)</a></p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="curiosity-card">
+                        <div class="curiosity-number">4</div>
+                        <h4>A MAIS ANTIGA</h4>
+                        <p><strong>Ponte de Arkadiko (Grécia)</strong> - Construída há 3300 anos! Ainda está de pé. Feita de pedras enormes, sem argamassa.</p>
+                        <p><a href="https://pt.wikipedia.org/wiki/Ponte_de_Arkadiko" target="_blank">🔗 Ler mais</a></p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="curiosity-card">
+                        <div class="curiosity-number">5</div>
+                        <h4>PONTE QUE É QUADRO</h4>
+                        <p><strong>Ponte da Paz (Tbilisi)</strong> - Feita de vidro e aço, toda iluminada por LEDs. À noite, parece uma nave espacial!</p>
+                        <p><a href="https://en.wikipedia.org/wiki/Bridge_of_Peace" target="_blank">🔗 Ler mais</a></p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="curiosity-card">
+                        <div class="curiosity-number">6</div>
+                        <h4>PONTE VIVA</h4>
+                        <p><strong>Pontes de Raízes (Índia)</strong> - Feitas... de árvores! Pessoas treinam raízes por décadas para crescerem como pontes vivas.</p>
+                        <p><a href="https://pt.wikipedia.org/wiki/Pontes_de_ra%C3%ADzes_vivas" target="_blank">🔗 Ler mais</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wiki-card mt-4">
+                <h4>📱 Canais pra Aprender Mais</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>YouTube:</h5>
+                        <ul>
+                            <li><a href="https://www.youtube.com/c/ManualdoMundo" target="_blank">🔹 Manual do Mundo</a> - Experimentos legais</li>
+                            <li><a href="https://www.youtube.com/c/EngenhariaDetalhada" target="_blank">🔹 Engenharia Detalhada</a> - Explicações simples</li>
+                            <li><a href="https://www.youtube.com/c/PrimoEngenheiro" target="_blank">🔹 Primo Engenheiro</a> - Curiosidades</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Instagram:</h5>
+                        <ul>
+                            <li><a href="https://www.instagram.com/engenharia" target="_blank">🔹 @engenharia</a></li>
+                            <li><a href="https://www.instagram.com/curiosidadeseng" target="_blank">🔹 @curiosidadeseng</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
