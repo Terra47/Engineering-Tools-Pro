@@ -129,8 +129,60 @@ function insertFunction(func) {
         } catch (e) {
             currentDisplay = '0';
         }
+    } else if (func === 'sqrt(') {
+        currentDisplay = '√(' + currentDisplay + ')';
+    } else if (func === '^') {
+        currentDisplay += '^';
     } else {
-        currentDisplay += func;
+        // Para todas as outras funções (sin, cos, tan, log, etc)
+        // Se o display atual for um número, aplica a função imediatamente (estilo Casio)
+        if (currentDisplay !== '0' && currentDisplay !== 'Error' && !isNaN(parseFloat(currentDisplay))) {
+            try {
+                const value = parseFloat(currentDisplay);
+                let result;
+                
+                switch(func) {
+                    case 'sin(':
+                        result = Math.sin(value * Math.PI / 180);
+                        break;
+                    case 'cos(':
+                        result = Math.cos(value * Math.PI / 180);
+                        break;
+                    case 'tan(':
+                        result = Math.tan(value * Math.PI / 180);
+                        break;
+                    case 'asin(':
+                        result = Math.asin(value) * 180 / Math.PI;
+                        break;
+                    case 'acos(':
+                        result = Math.acos(value) * 180 / Math.PI;
+                        break;
+                    case 'atan(':
+                        result = Math.atan(value) * 180 / Math.PI;
+                        break;
+                    case 'log(':
+                        result = Math.log10(value);
+                        break;
+                    case 'ln(':
+                        result = Math.log(value);
+                        break;
+                    case 'exp(':
+                        result = Math.exp(value);
+                        break;
+                    default:
+                        currentDisplay += func;
+                        updateDisplay();
+                        return;
+                }
+                
+                currentDisplay = result.toString();
+                addToHistory(func.replace('(', '') + '(' + value + ') = ' + result);
+            } catch (e) {
+                currentDisplay += func;
+            }
+        } else {
+            currentDisplay += func;
+        }
     }
     updateDisplay();
 }
@@ -192,7 +244,7 @@ function updateMemoryIndicator() {
     }
 }
 
-// Calculate function
+// ==================== CALCULATE FUNCTION CORRIGIDA ====================
 function calculate() {
     try {
         const result = evaluateExpression(currentDisplay);
@@ -213,62 +265,82 @@ function calculate() {
 function evaluateExpression(expr) {
     if (!expr || expr === '') return 0;
     
-    let processed = expr
+    // Primeiro, vamos tratar as funções especiais
+    let processed = expr;
+    
+    // Substituir notações visuais
+    processed = processed
         .replace(/÷/g, '/')
         .replace(/×/g, '*')
         .replace(/−/g, '-')
-        .replace(/\^/g, '**')
-        .replace(/sqrt\(/g, 'Math.sqrt(')
-        .replace(/sin\(/g, 'Math.sin(')
-        .replace(/cos\(/g, 'Math.cos(')
-        .replace(/tan\(/g, 'Math.tan(')
-        .replace(/asin\(/g, 'Math.asin(')
-        .replace(/acos\(/g, 'Math.acos(')
-        .replace(/atan\(/g, 'Math.atan(')
-        .replace(/log\(/g, 'Math.log10(')
-        .replace(/ln\(/g, 'Math.log(')
-        .replace(/exp\(/g, 'Math.exp(');
+        .replace(/\^/g, '**');
     
-    // Handle factorial
-    if (processed.includes('!')) {
-        processed = processed.replace(/(\d+)!/g, function(match, num) {
-            return 'factorial(' + num + ')';
+    // Função auxiliar para avaliar subexpressões com segurança
+    function safeEval(exp) {
+        try {
+            return Function('"use strict";return (' + exp + ')')();
+        } catch {
+            return 0;
+        }
+    }
+    
+    // Processar funções matemáticas uma a uma (ordem correta)
+    
+    // 1. Primeiro, √ (raiz quadrada) - formato √(expressão)
+    while (processed.includes('√(')) {
+        processed = processed.replace(/√\(([^)]+)\)/g, function(match, p1) {
+            const val = safeEval(p1);
+            return Math.sqrt(val);
         });
     }
     
-    // Define factorial function
-    window.factorial = function(n) {
-        n = Number(n);
-        if (n === 0 || n === 1) return 1;
-        if (n < 0) return NaN;
-        let result = 1;
-        for (let i = 2; i <= n; i++) {
-            result *= i;
+    // 2. Funções trigonométricas e logarítmicas
+    const functions = [
+        { pattern: /sin\(([^)]+)\)/g, handler: (val) => Math.sin(val * Math.PI / 180) },
+        { pattern: /cos\(([^)]+)\)/g, handler: (val) => Math.cos(val * Math.PI / 180) },
+        { pattern: /tan\(([^)]+)\)/g, handler: (val) => Math.tan(val * Math.PI / 180) },
+        { pattern: /asin\(([^)]+)\)/g, handler: (val) => Math.asin(val) * 180 / Math.PI },
+        { pattern: /acos\(([^)]+)\)/g, handler: (val) => Math.acos(val) * 180 / Math.PI },
+        { pattern: /atan\(([^)]+)\)/g, handler: (val) => Math.atan(val) * 180 / Math.PI },
+        { pattern: /log\(([^)]+)\)/g, handler: (val) => Math.log10(val) },
+        { pattern: /ln\(([^)]+)\)/g, handler: (val) => Math.log(val) },
+        { pattern: /exp\(([^)]+)\)/g, handler: (val) => Math.exp(val) },
+        { pattern: /sqrt\(([^)]+)\)/g, handler: (val) => Math.sqrt(val) }
+    ];
+    
+    // Aplicar cada função repetidamente até não haver mais
+    for (const func of functions) {
+        while (func.pattern.test(processed)) {
+            processed = processed.replace(func.pattern, function(match, p1) {
+                const val = safeEval(p1);
+                return func.handler(val);
+            });
         }
-        return result;
-    };
-    
-    // Handle statistical functions
-    if (processed.includes('mean(')) {
-        return calculateMean(processed);
-    }
-    if (processed.includes('variance(')) {
-        return calculateVariance(processed);
-    }
-    if (processed.includes('std(')) {
-        return calculateStd(processed);
     }
     
+    // 3. Processar fatorial
+    if (processed.includes('!')) {
+        processed = processed.replace(/(\d+)!/g, function(match, num) {
+            return factorial(parseFloat(num));
+        });
+    }
+    
+    // 4. Avaliar expressão final
     try {
-        // Use Function constructor for safer evaluation
-        const result = new Function('return ' + processed)();
-        if (isNaN(result) || !isFinite(result)) {
-            throw new Error('Resultado inválido');
-        }
-        return result;
+        return Function('"use strict";return (' + processed + ')')();
     } catch (e) {
         throw new Error('Expressão inválida');
     }
+}
+
+// Função fatorial
+function factorial(n) {
+    if (n === 0 || n === 1) return 1;
+    let result = 1;
+    for (let i = 2; i <= n; i++) {
+        result *= i;
+    }
+    return result;
 }
 
 // Statistical functions
