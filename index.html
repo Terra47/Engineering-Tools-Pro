@@ -17,7 +17,7 @@
     <!-- Header -->
     <header class="text-center py-4">
         <h1 class="display-4">Engineering Tools Pro</h1>
-        <p class="lead">Calculadora Científica | Biblioteca de Fórmulas | Catálogo de Pontes</p>
+        <p class="lead">Calculadora Científica | Biblioteca de Fórmulas | Catálogo de Pontes | Paint</p>
     </header>
 
     <!-- Navigation Menu -->
@@ -34,7 +34,130 @@
         <button class="btn btn-outline-primary nav-btn" onclick="window.switchSection('bridges')">
             <i class="fas fa-archway me-2"></i>Pontes
         </button>
+        <button class="btn btn-outline-primary nav-btn" onclick="window.switchSection('drawing')">
+            <i class="fas fa-paint-brush me-2"></i>Paint
+        </button>
     </nav>
+
+<!-- Drawing Section -->
+<section id="drawing-section" class="content-section">
+    <h2 class="text-center mb-4">Paint - Desenho Avançado</h2>
+    <div class="row justify-content-center">
+        <div class="col-lg-11">
+            <div class="drawing-container">
+                <!-- Barra de Ferramentas Principal -->
+                <div class="drawing-toolbar">
+                    <!-- Ferramentas de Desenho -->
+                    <div class="tool-group">
+                        <span class="tool-label">Ferramentas:</span>
+                        <button class="tool-btn active" id="tool-pencil" title="Lápis (P)">
+                            <i class="fas fa-pencil-alt"></i>
+                        </button>
+                        <button class="tool-btn" id="tool-brush" title="Pincel (B)">
+                            <i class="fas fa-paint-brush"></i>
+                        </button>
+                        <button class="tool-btn" id="tool-marker" title="Marcador (M)">
+                            <i class="fas fa-highlighter"></i>
+                        </button>
+                        <button class="tool-btn" id="tool-calligraphy" title="Caneta Caligrafia (C)">
+                            <i class="fas fa-pen-fancy"></i>
+                        </button>
+                        <button class="tool-btn" id="tool-eraser" title="Borracha (E)">
+                            <i class="fas fa-eraser"></i>
+                        </button>
+                    </div>
+
+                    <!-- Formas Geométricas -->
+                    <div class="tool-group">
+                        <span class="tool-label">Formas:</span>
+                        <button class="tool-btn" id="shape-line" title="Linha Reta (L)">
+                            <i class="fas fa-slash"></i>
+                        </button>
+                        <button class="tool-btn" id="shape-rect" title="Retângulo (R)">
+                            <i class="far fa-square"></i>
+                        </button>
+                        <button class="tool-btn" id="shape-circle" title="Círculo (O)">
+                            <i class="far fa-circle"></i>
+                        </button>
+                        <button class="tool-btn" id="shape-triangle" title="Triângulo (T)">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="tool-btn" id="shape-arrow" title="Seta">
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <button class="tool-btn" id="shape-star" title="Estrela">
+                            <i class="fas fa-star"></i>
+                        </button>
+                    </div>
+
+                    <!-- Controles de Estilo -->
+                    <div class="tool-group style-controls">
+                        <div class="color-picker-wrapper">
+                            <label>Cor:</label>
+                            <input type="color" id="drawing-color" value="#000000">
+                        </div>
+                        <div class="size-control">
+                            <label>Tamanho: <span id="size-value">5</span></label>
+                            <input type="range" id="drawing-size" min="1" max="50" value="5">
+                        </div>
+                        <div class="opacity-control">
+                            <label>Opacidade: <span id="opacity-value">100%</span></label>
+                            <input type="range" id="drawing-opacity" min="0" max="100" value="100">
+                        </div>
+                    </div>
+
+                    <!-- Ações -->
+                    <div class="tool-group">
+                        <button class="tool-btn" id="drawing-undo" title="Desfazer (Ctrl+Z)">
+                            <i class="fas fa-undo"></i>
+                        </button>
+                        <button class="tool-btn" id="drawing-redo" title="Refazer (Ctrl+Y)">
+                            <i class="fas fa-redo"></i>
+                        </button>
+                        <button class="tool-btn" id="drawing-clear" title="Limpar Tudo">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <button class="tool-btn" id="drawing-save" title="Salvar">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Segunda Barra - Opções Específicas -->
+                <div class="drawing-subtoolbar" id="subtoolbar">
+                    <!-- Aqui aparecem opções específicas da ferramenta selecionada -->
+                </div>
+
+                <!-- Canvas de Desenho -->
+                <div class="canvas-wrapper">
+                    <canvas id="drawing-canvas" width="1000" height="600"></canvas>
+                </div>
+
+                <!-- Status Bar -->
+                <div class="drawing-statusbar">
+                    <div class="status-left">
+                        <span id="tool-status">Ferramenta: Lápis</span>
+                        <span id="coord-status">X: 0, Y: 0</span>
+                    </div>
+                    <div class="status-right">
+                        <span id="zoom-status">Zoom: 100%</span>
+                        <span id="file-size">0 KB</span>
+                    </div>
+                </div>
+
+                <!-- Instruções -->
+                <div class="drawing-footer text-center mt-3">
+                    <p class="text-muted">
+                        <i class="fas fa-mouse-pointer"></i> Clique e arraste para desenhar | 
+                        <i class="fas fa-keyboard"></i> P: Lápis | B: Pincel | M: Marcador | E: Borracha |
+                        <i class="fas fa-undo"></i> Ctrl+Z: Desfazer | 
+                        <i class="fas fa-save"></i> Salve seus desenhos
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
     <!-- Main Content -->
     <main class="container">
